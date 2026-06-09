@@ -37,6 +37,32 @@ a {
   text-decoration: none;
 }
 
+input[type="date"]::-webkit-calendar-picker-indicator {
+  opacity: 0;
+  cursor: pointer;
+}
+
+input[type="date"]::-webkit-datetime-edit,
+input[type="date"]::-webkit-datetime-edit-fields-wrapper,
+input[type="date"]::-webkit-datetime-edit-text,
+input[type="date"]::-webkit-datetime-edit-month-field,
+input[type="date"]::-webkit-datetime-edit-day-field,
+input[type="date"]::-webkit-datetime-edit-year-field {
+  color: #f5f7fa;
+}
+
+input[type="date"]::-webkit-datetime-edit-text {
+  color: rgba(245, 247, 250, 0.42);
+}
+
+input[type="date"]::-webkit-date-and-time-value {
+  text-align: left;
+}
+
+input[type="date"]::-moz-focus-inner {
+  border: 0;
+}
+
 ::selection {
   background: rgba(210, 184, 148, 0.3);
   color: #fff;

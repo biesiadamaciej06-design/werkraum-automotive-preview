@@ -47,7 +47,7 @@ export function SiteHeader() {
           ))}
         </nav>
 
-        <Link href="#kontakt" className="cta-primary hidden sm:inline-flex">
+        <Link href="/check-in" className="cta-primary hidden sm:inline-flex">
           Check-in
         </Link>
       </div>
