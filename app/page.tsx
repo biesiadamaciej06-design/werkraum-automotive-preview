@@ -4,6 +4,11 @@ import { ContactForm } from "@/components/contact-form";
 import { FadeIn, StaggerGroup, StaggerItem } from "@/components/animations";
 import { SiteHeader } from "@/components/site-header";
 
+const repository = process.env.GITHUB_REPOSITORY?.split("/")[1] ?? "";
+const isUserPagesRepository = repository.endsWith(".github.io");
+const basePath = repository && !isUserPagesRepository ? `/${repository}` : "";
+const withBasePath = (path: string) => `${basePath}${path}`;
+
 const trustPoints = [
   "Präzise Diagnose",
   "Saubere Werkstattprozesse",
@@ -51,15 +56,15 @@ const detailItems = [
 const galleryItems = [
   {
     label: "Performance Service",
-    image: "/images/hero-premium-porsche-bmw.png",
+    image: withBasePath("/images/hero-premium-porsche-bmw.png"),
   },
   {
     label: "Premium Workshop",
-    image: "/images/brand-premium-mercedes-bmw.png",
+    image: withBasePath("/images/brand-premium-mercedes-bmw.png"),
   },
   {
     label: "Präzisionsarbeit",
-    image: "/images/service-bmw-brake-detail.png",
+    image: withBasePath("/images/service-bmw-brake-detail.png"),
   },
 ];
 
@@ -71,7 +76,7 @@ export default function Home() {
 
       <section className="relative min-h-screen">
         <Image
-          src="/images/hero-premium-porsche-bmw.png"
+          src={withBasePath("/images/hero-premium-porsche-bmw.png")}
           alt="Premium Performance Werkstatt"
           fill
           priority
@@ -215,7 +220,7 @@ export default function Home() {
         <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
           <FadeIn className="relative overflow-hidden rounded-[36px] border border-white/10">
             <Image
-              src="/images/brand-premium-mercedes-bmw.png"
+              src={withBasePath("/images/brand-premium-mercedes-bmw.png")}
               alt="Premium Werkstatt Atelier"
               width={1400}
               height={1000}
@@ -262,7 +267,7 @@ export default function Home() {
 
           <FadeIn delay={0.12} className="relative overflow-hidden rounded-[36px] border border-white/10">
             <Image
-              src="/images/service-bmw-brake-detail.png"
+              src={withBasePath("/images/service-bmw-brake-detail.png")}
               alt="Detailarbeit an Bremsen und Komponenten"
               width={1400}
               height={1000}
