@@ -1,6 +1,6 @@
 import { CheckInPage } from "@/CheckIn/check-in-page";
 
-const repository = process.env.GITHUB_REPOSITORY?.split("/")[1] ?? "";
+const repository = "werkraum-automotive-preview";
 const isUserPagesRepository = repository.endsWith(".github.io");
 const basePath = repository && !isUserPagesRepository ? `/${repository}` : "";
 const withBasePath = (path: string) => `${basePath}${path}`;

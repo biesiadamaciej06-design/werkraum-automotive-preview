@@ -12,6 +12,9 @@ const navItems = [
   { label: "Kontakt", href: "#kontakt" },
 ];
 
+const repository = "werkraum-automotive-preview";
+const basePath = `/${repository}`;
+
 export function SiteHeader() {
   const { scrollY } = useScroll();
   const [scrolled, setScrolled] = useState(false);
@@ -47,7 +50,7 @@ export function SiteHeader() {
           ))}
         </nav>
 
-        <Link href="/check-in" className="cta-primary hidden sm:inline-flex">
+        <Link href={`${basePath}/check-in`} className="cta-primary hidden sm:inline-flex">
           Check-in
         </Link>
       </div>

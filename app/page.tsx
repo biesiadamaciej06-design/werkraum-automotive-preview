@@ -4,7 +4,7 @@ import { ContactForm } from "@/components/contact-form";
 import { FadeIn, StaggerGroup, StaggerItem } from "@/components/animations";
 import { SiteHeader } from "@/components/site-header";
 
-const repository = process.env.GITHUB_REPOSITORY?.split("/")[1] ?? "";
+const repository = "werkraum-automotive-preview";
 const isUserPagesRepository = repository.endsWith(".github.io");
 const basePath = repository && !isUserPagesRepository ? `/${repository}` : "";
 const withBasePath = (path: string) => `${basePath}${path}`;
@@ -98,7 +98,7 @@ export default function Home() {
               </div>
 
               <div className="flex flex-col gap-4 sm:flex-row">
-                <Link href="/check-in" className="cta-primary">
+                <Link href={withBasePath("/check-in")} className="cta-primary">
                   Check-in
                 </Link>
                 <Link href="#leistungen" className="cta-secondary">
@@ -337,7 +337,7 @@ export default function Home() {
                 melden uns persönlich mit einer passenden Einschätzung.
               </p>
             </div>
-            <Link href="/check-in" className="cta-primary">
+            <Link href={withBasePath("/check-in")} className="cta-primary">
               Check-in
             </Link>
           </div>

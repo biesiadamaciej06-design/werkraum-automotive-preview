@@ -6,6 +6,9 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { CheckInHero } from "@/CheckIn/check-in-hero";
 import { StepProgress } from "@/CheckIn/step-progress";
 
+const repository = "werkraum-automotive-preview";
+const basePath = `/${repository}`;
+
 type FileItem = {
   id: string;
   name: string;
@@ -360,10 +363,10 @@ export function CheckInPage({ heroImageSrc }: CheckInPageProps) {
           </Link>
 
           <div className="flex items-center gap-3">
-            <Link href="/" className="cta-secondary hidden sm:inline-flex">
+            <Link href={basePath} className="cta-secondary hidden sm:inline-flex">
               Zur Hauptseite
             </Link>
-            <Link href="/#kontakt" className="cta-primary">
+            <Link href={`${basePath}/#kontakt`} className="cta-primary">
               Termin anfragen
             </Link>
           </div>
@@ -380,7 +383,7 @@ export function CheckInPage({ heroImageSrc }: CheckInPageProps) {
               bestmöglich vor. Unser Team meldet sich persönlich bei dir.
             </p>
             <div className="mt-10">
-              <Link href="/" className="cta-primary">
+              <Link href={basePath} className="cta-primary">
                 Zur Startseite
               </Link>
             </div>
