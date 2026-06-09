@@ -98,7 +98,7 @@ export default function Home() {
               </div>
 
               <div className="flex flex-col gap-4 sm:flex-row">
-                <Link href={withBasePath("/check-in")} className="cta-primary">
+                <Link href="/check-in" className="cta-primary">
                   Check-in
                 </Link>
                 <Link href="#leistungen" className="cta-secondary">
@@ -337,7 +337,7 @@ export default function Home() {
                 melden uns persönlich mit einer passenden Einschätzung.
               </p>
             </div>
-            <Link href={withBasePath("/check-in")} className="cta-primary">
+            <Link href="/check-in" className="cta-primary">
               Check-in
             </Link>
           </div>
