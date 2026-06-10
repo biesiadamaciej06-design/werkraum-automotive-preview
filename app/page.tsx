@@ -350,8 +350,8 @@ export default function Home() {
             <span className="eyebrow">Kontakt</span>
             <h2 className="section-title">Persönliche Beratung für Ihr Fahrzeug</h2>
             <p className="text-base leading-8 text-white/66">
-              Teilen Sie uns Fahrzeugmodell, Anliegen und gewünschten Leistungsumfang mit. Wir
-              melden uns direkt und mit einer realistischen Einschätzung zurück.
+              Teilen Sie uns Ihr Anliegen und den gewünschten Zeitraum mit. Wir melden uns direkt
+              und mit einer realistischen Einschätzung zurück.
             </p>
 
             <div className="grid gap-4 pt-4">

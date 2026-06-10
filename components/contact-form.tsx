@@ -3,8 +3,6 @@ export function ContactForm() {
     { label: "Name", type: "text", placeholder: "Ihr Name" },
     { label: "Telefonnummer", type: "tel", placeholder: "+43 ..." },
     { label: "E-Mail", type: "email", placeholder: "name@beispiel.at" },
-    { label: "Fahrzeugmodell", type: "text", placeholder: "z. B. Porsche 911 Carrera" },
-    { label: "Gewünschte Leistung", type: "text", placeholder: "Service, Diagnose, Umbau ..." },
   ];
 
   return (
@@ -25,7 +23,7 @@ export function ContactForm() {
           <span>Nachricht</span>
           <textarea
             rows={5}
-            placeholder="Beschreiben Sie Fahrzeug, Anliegen und gewünschten Zeitraum."
+            placeholder="Beschreiben Sie Ihr Anliegen und den gewünschten Zeitraum."
             className="w-full rounded-[24px] border border-white/10 bg-white/5 px-4 py-3 text-sm text-white outline-none transition placeholder:text-white/30 focus:border-champagne/50 focus:bg-white/[0.07]"
           />
         </label>
