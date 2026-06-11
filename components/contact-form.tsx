@@ -23,7 +23,7 @@ export function ContactForm() {
           <span>Nachricht</span>
           <textarea
             rows={5}
-            placeholder="Beschreiben Sie Ihr Anliegen und den gewünschten Zeitraum."
+            placeholder="Beschreiben Sie Ihr Anliegen."
             className="w-full rounded-[24px] border border-white/10 bg-white/5 px-4 py-3 text-sm text-white outline-none transition placeholder:text-white/30 focus:border-champagne/50 focus:bg-white/[0.07]"
           />
         </label>
@@ -31,7 +31,7 @@ export function ContactForm() {
 
       <div className="mt-6 flex flex-col gap-4 border-t border-white/10 pt-6 sm:flex-row sm:items-center sm:justify-between">
         <p className="text-sm text-white/45">
-          Wir melden uns persönlich mit einer passenden Einschätzung zurück.
+          Wir melden uns so schnell wie möglich zurück.
         </p>
         <button type="submit" className="cta-primary">
           Anfrage senden
