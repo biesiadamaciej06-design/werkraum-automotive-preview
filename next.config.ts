@@ -1,8 +1,10 @@
 import type { NextConfig } from "next";
 
+const isProduction = process.env.NODE_ENV === "production";
 const repository = process.env.GITHUB_REPOSITORY?.split("/")[1] ?? "werkraum-automotive-preview";
 const isUserPagesRepository = repository.endsWith(".github.io");
-const basePath = repository && !isUserPagesRepository ? `/${repository}` : "";
+const basePath =
+  isProduction && repository && !isUserPagesRepository ? `/${repository}` : "";
 
 const nextConfig: NextConfig = {
   output: "export",
