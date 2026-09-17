@@ -28,42 +28,29 @@ const credibilityItems = [
 
 const services = [
   {
-    code: "01",
     title: "Wartung mit Substanz",
     text: "Servicearbeiten mit Herstellerbezug, aber ohne den anonymen Charakter großer Standardabläufe.",
   },
   {
-    code: "02",
     title: "Diagnose statt Rätselraten",
     text: "Fehlerbilder werden systematisch eingegrenzt, erklärt und erst dann wirtschaftlich sinnvoll gelöst.",
   },
   {
-    code: "03",
     title: "Bremsen & Fahrwerk",
     text: "Arbeiten an Komponenten, bei denen Fahrgefühl, Sicherheit und Präzision direkt zusammenhängen.",
   },
   {
-    code: "04",
     title: "Performance-Upgrades",
     text: "Gezielte technische Maßnahmen für Fahrzeuge, die mehr Charakter brauchen, nicht mehr Lautstärke.",
   },
   {
-    code: "05",
     title: "Aufbereitung & Präsenz",
     text: "Pflege und visuelle Veredelung mit Blick auf Werterhalt, Materialwirkung und Gesamtauftritt.",
   },
   {
-    code: "06",
     title: "Umbauten mit Haltung",
     text: "Individuelle Lösungen für Kunden, die technische Qualität höher gewichten als kurzfristige Trends.",
   },
-];
-
-const marques = [
-  { label: "Porsche", note: "für Fahrer, die Präzision sofort merken" },
-  { label: "BMW M", note: "wenn Fahrdynamik sauber abgestimmt bleiben soll" },
-  { label: "Mercedes-AMG", note: "für Leistung mit kultivierter Werkstattqualität" },
-  { label: "Audi RS", note: "für Technik, die nicht nur schnell, sondern stimmig sein muss" },
 ];
 
 const detailItems = [
@@ -195,43 +182,11 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="section-shell relative z-10 py-24 sm:py-28">
-        <div className="grid gap-10 lg:grid-cols-[0.72fr_1.28fr] lg:items-start">
-          <FadeIn className="section-copy">
-            <span className="eyebrow">Vertrauen</span>
-            <h2 className="section-title">Die Seite soll nicht laut wirken. Die Arbeit auch nicht.</h2>
-            <p className="text-base leading-8 text-white/64">
-              Hochwertige Werkstattqualität zeigt sich selten in großen Gesten, sondern in der
-              Konsequenz kleiner Entscheidungen. Genau daraus entsteht Vertrauen.
-            </p>
-          </FadeIn>
-
-          <StaggerGroup className="grid gap-5 md:grid-cols-2">
-            {credibilityItems.map((item, index) => (
-              <StaggerItem key={item.value}>
-                <article className="editorial-card h-full">
-                  <div className="flex items-start justify-between gap-6">
-                    <div className="space-y-4">
-                      <span className="text-xs uppercase tracking-[0.28em] text-champagne opacity-70">
-                        Prinzip {index + 1}
-                      </span>
-                      <h3 className="text-2xl font-medium text-white">{item.value}</h3>
-                      <p className="leading-7 text-white/64">{item.text}</p>
-                    </div>
-                    <span className="number-chip">{`0${index + 1}`}</span>
-                  </div>
-                </article>
-              </StaggerItem>
-            ))}
-          </StaggerGroup>
-        </div>
-      </section>
-
       <section
         id="leistungen"
         className="section-shell relative z-10 scroll-mt-28 py-24 sm:scroll-mt-32 sm:py-28"
       >
-        <FadeIn className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
+        <FadeIn className="mx-auto max-w-3xl text-center">
           <div className="section-copy">
             <span className="eyebrow">Leistungen</span>
             <h2 className="section-title">Leistungen, die wie Werkstattleistung klingen und nicht wie Werbetext.</h2>
@@ -240,23 +195,13 @@ export default function Home() {
               und im Umgang mit dem Fahrzeug respektvoll bleibt.
             </p>
           </div>
-          <p className="max-w-md text-sm leading-7 text-white opacity-45">
-            Keine vagen Superlative, sondern ein Auftritt, der eher an ein diskretes Studio als an
-            eine generische Autoseite erinnert.
-          </p>
         </FadeIn>
 
-        <StaggerGroup className="mt-12 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+        <StaggerGroup className="mx-auto mt-12 grid max-w-5xl gap-5 md:grid-cols-2">
           {services.map((service) => (
             <StaggerItem key={service.title}>
-              <article className="service-block h-full">
-                <div className="flex items-center justify-between gap-4 border-b border-white/10 pb-5">
-                  <span className="text-xs uppercase tracking-[0.28em] text-white opacity-40">
-                    Bereich {service.code}
-                  </span>
-                  <span className="number-chip">{service.code}</span>
-                </div>
-                <div className="mt-6 space-y-4">
+              <article className="service-block h-full text-center">
+                <div className="space-y-4">
                   <h3 className="text-2xl font-medium text-white">{service.title}</h3>
                   <p className="leading-7 text-white/64">{service.text}</p>
                 </div>
@@ -270,7 +215,7 @@ export default function Home() {
         id="fahrzeuge"
         className="section-shell relative z-10 scroll-mt-28 py-24 sm:scroll-mt-32 sm:py-28"
       >
-        <div className="grid gap-8 lg:grid-cols-[0.95fr_1.05fr] lg:items-start">
+        <div className="mx-auto max-w-3xl text-center">
           <FadeIn className="section-copy">
             <span className="eyebrow">Fahrzeuge</span>
             <h2 className="section-title">Für Marken, bei denen Nuancen wichtiger sind als Schlagworte.</h2>
@@ -279,17 +224,6 @@ export default function Home() {
               und technisches Vertrauen im Vordergrund stehen.
             </p>
           </FadeIn>
-
-          <StaggerGroup className="grid gap-4">
-            {marques.map((marque) => (
-              <StaggerItem key={marque.label}>
-                <div className="brand-strip">
-                  <p className="text-xl font-medium text-white">{marque.label}</p>
-                  <p className="mt-2 text-sm leading-7 text-white opacity-55">{marque.note}</p>
-                </div>
-              </StaggerItem>
-            ))}
-          </StaggerGroup>
         </div>
       </section>
 
