@@ -49,7 +49,7 @@ type CheckInData = {
 const STORAGE_KEY = "werksraum-checkin-v1";
 
 const stepItems = [
-  { id: "customer", number: 1, title: "Kundendaten" },
+  { id: "customer", number: 1, title: "Kontaktdaten" },
   { id: "vehicle", number: 2, title: "Fahrzeugdaten" },
   { id: "request", number: 3, title: "Anliegen" },
   { id: "uploads", number: 4, title: "Bilder & Dokumente" },
@@ -150,7 +150,7 @@ export function CheckInPage({ heroImageSrc }: CheckInPageProps) {
   const summaryGroups = useMemo(
     () => [
       {
-        title: "Kundendaten",
+        title: "Kontaktdaten",
         items: [
           ["Name", `${formData.firstName} ${formData.lastName}`.trim()],
           ["Telefon", formData.phone],
@@ -353,7 +353,7 @@ export function CheckInPage({ heroImageSrc }: CheckInPageProps) {
     const body = [
       "Neuer digitaler Fahrzeug-Check-in",
       "",
-      "Kundendaten",
+      "Kontaktdaten",
       `Name: ${`${formData.firstName} ${formData.lastName}`.trim()}`,
       `Telefon: ${formData.phone}`,
       `E-Mail: ${formData.email}`,
@@ -521,7 +521,7 @@ export function CheckInPage({ heroImageSrc }: CheckInPageProps) {
                     {currentStep === 1 ? (
                       <div className="space-y-6">
                         <SectionHeading
-                          title="Kundendaten"
+                          title="Kontaktdaten"
                           text="Teile uns mit, wie wir dich am besten erreichen können."
                         />
                         <div className="grid gap-5 md:grid-cols-2">
