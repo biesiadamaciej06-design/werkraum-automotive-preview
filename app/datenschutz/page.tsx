@@ -118,13 +118,25 @@ export default function DatenschutzPage() {
                   sachgerechten Bearbeitung von Anfragen.
                 </p>
                 <p>
-                  Das auf dieser Website eingesetzte Kontaktformular erstellt derzeit einen
-                  E-Mail-Entwurf im lokal eingerichteten E-Mail-Programm der nutzenden Person
-                  (zum Beispiel Outlook oder Apple Mail). Die eingegebenen Daten werden dabei nicht
-                  über einen eigenen Server dieser Website verarbeitet, sondern erst mit dem
-                  aktiven Versand der E-Mail an uns übermittelt. Wenn später eine direkte
-                  serverseitige Formularübermittlung eingerichtet wird, werden diese Hinweise um die
-                  konkret eingesetzte technische Abwicklung, Empfänger und Speicherdauer ergänzt.
+                  Für den Versand des Kontaktformulars verwenden wir Web3Forms. Beim Absenden werden
+                  Name, Telefonnummer, E-Mail-Adresse, Nachricht und technisch erforderliche
+                  Verbindungsdaten an Web3Forms übermittelt und an uns per E-Mail weitergeleitet.
+                  Web3Creative verarbeitet diese Daten in unserem Auftrag. Die Speicherung von
+                  Formulareingaben im Web3Forms-Konto ist auf sieben Tage begrenzt.
+                </p>
+                <p>
+                  Web3Forms nutzt nach eigenen Angaben unter anderem Infrastruktur von Amazon Web
+                  Services, Cloudflare und Hetzner sowie Dienste zur Spam-Abwehr. Dabei kann es zu
+                  Datenübermittlungen in Drittländer kommen. Weitere Informationen finden Sie in der{" "}
+                  <a
+                    href="https://web3forms.com/privacy"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="text-champagne underline underline-offset-4"
+                  >
+                    Datenschutzinformation von Web3Forms
+                  </a>
+                  .
                 </p>
               </div>
             </section>
