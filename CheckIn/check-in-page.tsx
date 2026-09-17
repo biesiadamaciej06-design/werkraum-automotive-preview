@@ -38,7 +38,6 @@ type CheckInData = {
   budgetLimit: string;
   preferredDate: string;
   replacementMobility: string;
-  itemsInVehicle: string;
   files: {
     damageImages: FileItem[];
   };
@@ -94,7 +93,6 @@ const initialData: CheckInData = {
   budgetLimit: "",
   preferredDate: "",
   replacementMobility: "Nicht benötigt",
-  itemsInVehicle: "",
   files: {
     damageImages: [],
   },
@@ -180,7 +178,6 @@ export function CheckInPage({ heroImageSrc }: CheckInPageProps) {
           ["Kostenlimit brutto", formData.budgetLimit ? `${formData.budgetLimit} €` : ""],
           ["Wunschtermin", formData.preferredDate],
           ["Ersatzmobilität", formData.replacementMobility],
-          ["Gegenstände im Fahrzeug", formData.itemsInVehicle],
           ["Seit wann", formData.issueSince],
           ["Verhalten", formData.issueFrequency],
           ["Warnlampen", formData.warningLights],
@@ -292,6 +289,9 @@ export function CheckInPage({ heroImageSrc }: CheckInPageProps) {
         nextErrors.firstRegistration = "Bitte Erstzulassung angeben.";
       }
       if (!formData.licensePlate.trim()) nextErrors.licensePlate = "Bitte Kennzeichen angeben.";
+      if (formData.vin.trim() && formData.vin.trim().length !== 17) {
+        nextErrors.vin = "Die Fahrgestellnummer muss genau 17 Zeichen enthalten.";
+      }
       if (!formData.mileage.trim()) nextErrors.mileage = "Bitte Kilometerstand angeben.";
     }
 
@@ -374,7 +374,6 @@ export function CheckInPage({ heroImageSrc }: CheckInPageProps) {
       `Kostenlimit brutto: ${formData.budgetLimit}`,
       `Wunschtermin: ${formData.preferredDate}`,
       `Ersatzmobilitaet: ${formData.replacementMobility}`,
-      `Gegenstaende im Fahrzeug: ${formData.itemsInVehicle}`,
       `Seit wann: ${formData.issueSince}`,
       `Verhalten: ${formData.issueFrequency}`,
       `Warnlampen: ${formData.warningLights}`,
@@ -558,7 +557,14 @@ export function CheckInPage({ heroImageSrc }: CheckInPageProps) {
                             placeholder="MM/JJJJ"
                           />
                           <TextField label="Kennzeichen" value={formData.licensePlate} onChange={(value) => updateField("licensePlate", value)} error={errors.licensePlate} />
-                          <TextField label="Fahrgestellnummer / VIN" value={formData.vin} onChange={(value) => updateField("vin", value)} />
+                          <TextField
+                            label="Fahrgestellnummer / VIN"
+                            value={formData.vin}
+                            onChange={(value) => updateField("vin", value.toUpperCase())}
+                            error={errors.vin}
+                            placeholder="17-stellig (optional)"
+                            maxLength={17}
+                          />
                           <TextField label="Kilometerstand" value={formData.mileage} onChange={(value) => updateField("mileage", value)} error={errors.mileage} />
                           <SelectField
                             label="Kraftstoffart"
@@ -645,13 +651,6 @@ export function CheckInPage({ heroImageSrc }: CheckInPageProps) {
                               "Abholung / Bringservice",
                               "Warten vor Ort",
                             ]}
-                          />
-                          <TextField
-                            className="md:col-span-2"
-                            label="Gegenstände im Fahrzeug"
-                            value={formData.itemsInVehicle}
-                            onChange={(value) => updateField("itemsInVehicle", value)}
-                            placeholder="Zulassung, Serviceheft, Kindersitz, Ladekabel ..."
                           />
                           <TextField
                             label="Seit wann besteht das Problem?"
@@ -816,6 +815,7 @@ function TextField({
   className,
   type = "text",
   placeholder,
+  maxLength,
 }: {
   label: string;
   value: string;
@@ -824,6 +824,7 @@ function TextField({
   className?: string;
   type?: string;
   placeholder?: string;
+  maxLength?: number;
 }) {
   return (
     <label className={`space-y-2 ${className || ""}`}>
@@ -832,6 +833,7 @@ function TextField({
         type={type}
         value={value}
         placeholder={placeholder}
+        maxLength={maxLength}
         onChange={(event) => onChange(event.target.value)}
         className="w-full rounded-[22px] border border-white/10 bg-white/[0.04] px-4 py-3 text-sm text-white outline-none transition placeholder:text-white/28 focus:border-champagne/45 focus:bg-white/[0.06] focus:shadow-[0_0_0_1px_rgba(210,184,148,0.14)]"
       />
