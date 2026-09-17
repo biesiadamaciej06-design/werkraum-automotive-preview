@@ -5,7 +5,8 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { CheckInHero } from "@/CheckIn/check-in-hero";
 import { StepProgress } from "@/CheckIn/step-progress";
-import { buildMailtoHref, contactConfig } from "@/lib/contact";
+
+const web3FormsAccessKey = "3fa4ef02-b7f2-483c-a1f0-517da6a09373";
 
 type FileItem = {
   id: string;
@@ -111,6 +112,9 @@ export function CheckInPage({ heroImageSrc }: CheckInPageProps) {
   const [formData, setFormData] = useState<CheckInData>(initialData);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState("");
+  const botcheckRef = useRef<HTMLInputElement>(null);
   const minPreferredDate = useMemo(() => new Date().toISOString().split("T")[0], []);
 
   useEffect(() => {
@@ -338,10 +342,13 @@ export function CheckInPage({ heroImageSrc }: CheckInPageProps) {
     setCurrentStep((previous) => Math.max(previous - 1, 1));
   };
 
-  const submitForm = () => {
+  const submitForm = async () => {
     if (!validateStep(5)) {
       return;
     }
+
+    setIsSubmitting(true);
+    setSubmitError("");
 
     const body = [
       "Neuer digitaler Fahrzeug-Check-in",
@@ -373,29 +380,62 @@ export function CheckInPage({ heroImageSrc }: CheckInPageProps) {
       `Warnlampen: ${formData.warningLights}`,
       `Warnmeldung: ${formData.warningDescription}`,
       "",
-      "Uploads",
+      "Ausgewählte Dateien (nicht übertragen)",
       formData.files.damageImages.length
         ? formData.files.damageImages.map((item) => `- ${item.name}`).join("\n")
-        : "Keine Dateien im Entwurf uebergeben. Bitte bei Bedarf manuell anhaengen.",
+        : "Keine Dateien ausgewählt.",
     ].join("\n");
 
-    if (typeof window !== "undefined") {
-      window.location.href = buildMailtoHref({
-        to: contactConfig.checkInEmail,
-        subject: `Check-in${formData.licensePlate ? ` - ${formData.licensePlate}` : ""}`,
-        body,
+    try {
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          access_key: web3FormsAccessKey,
+          subject: `Neuer Fahrzeug-Check-in${formData.licensePlate ? ` – ${formData.licensePlate}` : ""}`,
+          from_name: "Werksraum Automotive Check-in",
+          name: `${formData.firstName} ${formData.lastName}`.trim(),
+          phone: formData.phone,
+          email: formData.email,
+          message: body,
+          botcheck: botcheckRef.current?.value ?? "",
+        }),
       });
-    }
 
-    if (typeof window !== "undefined") {
-      window.localStorage.removeItem(STORAGE_KEY);
-    }
+      const result = (await response.json()) as { success?: boolean };
 
-    setIsSubmitted(true);
+      if (!response.ok || !result.success) {
+        throw new Error("Check-in submission failed");
+      }
+
+      if (typeof window !== "undefined") {
+        window.localStorage.removeItem(STORAGE_KEY);
+      }
+
+      setIsSubmitted(true);
+    } catch {
+      setSubmitError(
+        "Der Check-in konnte nicht gesendet werden. Bitte versuchen Sie es erneut oder schreiben Sie an info@werksraum.at.",
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
     <main className="relative overflow-hidden bg-transparent">
+      <input
+        ref={botcheckRef}
+        type="text"
+        name="botcheck"
+        className="hidden"
+        tabIndex={-1}
+        autoComplete="off"
+        aria-hidden="true"
+      />
       <div className="pointer-events-none absolute inset-0 bg-radial-premium" />
 
       <header className="fixed inset-x-0 top-0 z-50 px-4 py-4 sm:px-6">
@@ -419,11 +459,13 @@ export function CheckInPage({ heroImageSrc }: CheckInPageProps) {
         <section className="section-shell relative z-10 flex min-h-screen items-center py-32">
           <div className="glass-panel mx-auto max-w-3xl rounded-[36px] p-8 text-center sm:p-12">
             <span className="eyebrow justify-center">Bestätigung</span>
-            <h1 className="section-title mt-5">Check-in-Entwurf geöffnet</h1>
+            <h1 className="section-title mt-5">Check-in erfolgreich gesendet</h1>
             <p className="mx-auto mt-6 max-w-2xl text-base leading-8 text-white/68">
-              Ihr E-Mail-Programm wurde mit einem Entwurf an {contactConfig.checkInEmail} geöffnet.
-              Bitte pruefen Sie den Inhalt und senden Sie die E-Mail anschliessend ab. Hochgeladene
-              Dateien muessen bei Bedarf manuell angehaengt werden.
+              Vielen Dank. Ihre Angaben wurden direkt an Werksraum Automotive übermittelt. Wir
+              melden uns über die von Ihnen bevorzugte Kontaktart.
+              {formData.files.damageImages.length
+                ? " Die ausgewählten Dateien wurden nicht mitgesendet; bitte halten Sie diese für unsere Rückmeldung bereit."
+                : ""}
             </p>
             <div className="mt-10">
               <Link href="/" className="cta-primary">
@@ -645,12 +687,12 @@ export function CheckInPage({ heroImageSrc }: CheckInPageProps) {
                       <div className="space-y-6">
                         <SectionHeading
                           title="Bilder & Dokumente"
-                          text="Schadenbilder sind optional. Wenn etwas sichtbar ist, kannst du hier direkt Fotos mitsenden."
+                          text="Schadenbilder sind optional. Die Dateinamen werden im Check-in vermerkt; die Dateien selbst werden derzeit nicht übertragen."
                         />
 
                         <UploadField
-                          title="Schadenbilder hochladen"
-                          helperText="Optional: Nur wenn Schäden, Auffälligkeiten oder relevante Details sichtbar sind."
+                          title="Schadenbilder auswählen"
+                          helperText="Optional: Bitte halten Sie die Bilder bereit. Wir können sie nach unserer Rückmeldung per E-Mail anfordern."
                           files={formData.files.damageImages}
                           onAdd={(files) => updateFiles("damageImages", files)}
                           onRemove={(id) => removeFile("damageImages", id)}
@@ -702,6 +744,14 @@ export function CheckInPage({ heroImageSrc }: CheckInPageProps) {
                             onChange={(checked) => updateField("acceptPrivacy", checked)}
                             error={errors.acceptPrivacy}
                           />
+                          <p className="text-sm leading-7 text-white/45">
+                            Die Angaben werden über Web3Forms an uns übermittelt. Details finden Sie
+                            im{" "}
+                            <Link href="/datenschutz/" className="underline underline-offset-4 hover:text-white">
+                              Datenschutz
+                            </Link>
+                            .
+                          </p>
                         </div>
                       </div>
                     ) : null}
@@ -723,9 +773,21 @@ export function CheckInPage({ heroImageSrc }: CheckInPageProps) {
                       Weiter
                     </button>
                   ) : (
-                    <button type="button" onClick={submitForm} className="cta-primary">
-                      Check-in absenden
-                    </button>
+                    <div className="flex flex-col items-end gap-3">
+                      {submitError ? (
+                        <p role="alert" className="max-w-xl text-right text-sm text-red-300">
+                          {submitError}
+                        </p>
+                      ) : null}
+                      <button
+                        type="button"
+                        onClick={submitForm}
+                        className="cta-primary disabled:cursor-wait disabled:opacity-60"
+                        disabled={isSubmitting}
+                      >
+                        {isSubmitting ? "Wird gesendet …" : "Check-in absenden"}
+                      </button>
+                    </div>
                   )}
                 </div>
               </div>

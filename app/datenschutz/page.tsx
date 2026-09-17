@@ -118,11 +118,14 @@ export default function DatenschutzPage() {
                   sachgerechten Bearbeitung von Anfragen.
                 </p>
                 <p>
-                  Für den Versand des Kontaktformulars verwenden wir Web3Forms. Beim Absenden werden
-                  Name, Telefonnummer, E-Mail-Adresse, Nachricht und technisch erforderliche
-                  Verbindungsdaten an Web3Forms übermittelt und an uns per E-Mail weitergeleitet.
-                  Web3Creative verarbeitet diese Daten in unserem Auftrag. Die Speicherung von
-                  Formulareingaben im Web3Forms-Konto ist auf sieben Tage begrenzt.
+                  Für den Versand des Kontaktformulars und des digitalen Fahrzeug-Check-ins
+                  verwenden wir Web3Forms. Beim Absenden werden Name, Kontaktdaten, Nachricht sowie
+                  beim Check-in die eingegebenen Fahrzeugdaten, Terminwünsche und Angaben zum
+                  Serviceanliegen an Web3Forms übermittelt und an uns per E-Mail weitergeleitet.
+                  Ausgewählte Bild- oder Dokumentdateien werden derzeit nicht übertragen; lediglich
+                  deren Dateinamen können im Check-in vermerkt sein. Web3Creative verarbeitet diese
+                  Daten in unserem Auftrag. Die Speicherung von Formulareingaben im
+                  Web3Forms-Konto ist auf sieben Tage begrenzt.
                 </p>
                 <p>
                   Web3Forms nutzt nach eigenen Angaben unter anderem Infrastruktur von Amazon Web
@@ -137,6 +140,12 @@ export default function DatenschutzPage() {
                     Datenschutzinformation von Web3Forms
                   </a>
                   .
+                </p>
+                <p>
+                  Ein noch nicht abgesendeter Check-in wird lokal im Browser des verwendeten Geräts
+                  gespeichert, damit die Eingabe bei einer Unterbrechung fortgesetzt werden kann.
+                  Nach erfolgreichem Absenden wird dieser lokale Entwurf gelöscht. Sie können ihn
+                  außerdem jederzeit durch das Löschen der Website-Daten in Ihrem Browser entfernen.
                 </p>
               </div>
             </section>
