@@ -416,8 +416,7 @@ export default function Home() {
               Werksraum Automotive
             </p>
             <p className="max-w-md text-sm leading-7 text-white opacity-45">
-              Premium Service für exklusive Fahrzeuge mit einer klaren Haltung zu Präzision,
-              Transparenz und Werkstattkultur.
+              Zuverlässiger Service, transparente Kommunikation und sorgfältige Arbeit für Ihr Fahrzeug.
             </p>
           </div>
 
