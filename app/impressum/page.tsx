@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { contactConfig } from "@/lib/contact";
 
 export default function ImpressumPage() {
   return (
@@ -18,24 +19,34 @@ export default function ImpressumPage() {
               <span className="eyebrow">Rechtliches</span>
               <h1 className="section-title">Impressum</h1>
               <p className="text-base leading-8 text-white/66">
-                Diese Seite ist als Platzhalter vorbereitet. Tragen Sie hier die rechtlich
-                erforderlichen Angaben zu Ihrem Unternehmen ein.
+                Informationen gemäß § 5 E-Commerce-Gesetz und Offenlegung gemäß § 25 Mediengesetz.
               </p>
             </div>
 
             <div className="grid gap-4">
               {[
-                "Firmenname / Betreiber",
-                "Anschrift",
-                "Telefonnummer",
-                "E-Mail-Adresse",
-                "UID-Nummer / Firmenbuchnummer",
-                "Aufsichtsbehörde / Kammer",
+                `Betreiber und Medieninhaber: ${contactConfig.owner}`,
+                `Geschäftsbezeichnung: ${contactConfig.businessName}`,
+                `Anschrift: ${contactConfig.streetAddress}, ${contactConfig.postalCode} ${contactConfig.city}, ${contactConfig.country}`,
+                `E-Mail: ${contactConfig.inquiryEmail}`,
+                "Unternehmensgegenstand: Vorbereitung eines Betriebs für Fahrzeugservice, Wartung, Diagnose und Fahrzeugpflege",
+                "Grundlegende Richtung der Website: Information über das geplante Leistungsangebot von Werksraum Automotive",
               ].map((item) => (
                 <div key={item} className="glass-panel rounded-[24px] px-5 py-5">
                   <p className="text-sm text-white/78">{item}</p>
                 </div>
               ))}
+            </div>
+
+            <div className="space-y-3 border-t border-white/10 pt-8 text-sm leading-7 text-white/66">
+              <p>
+                Werksraum Automotive befindet sich in der Gründungs- und Vorbereitungsphase. Eine
+                Gesellschaft mit beschränkter Haftung ist derzeit nicht im Firmenbuch eingetragen.
+              </p>
+              <p>
+                Firmenbuchnummer, UID-Nummer und gewerberechtliche Angaben werden ergänzt, sobald
+                diese vorliegen.
+              </p>
             </div>
           </div>
         </div>

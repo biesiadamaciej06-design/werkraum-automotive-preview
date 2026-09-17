@@ -3,69 +3,90 @@ import Link from "next/link";
 import { ContactForm } from "@/components/contact-form";
 import { FadeIn, StaggerGroup, StaggerItem } from "@/components/animations";
 import { SiteHeader } from "@/components/site-header";
+import { buildMailtoHref, contactConfig } from "@/lib/contact";
 
-const repository = "werkraum-automotive-preview";
-const isUserPagesRepository = repository.endsWith(".github.io");
-const isProduction = process.env.NODE_ENV === "production";
-const basePath =
-  isProduction && repository && !isUserPagesRepository ? `/${repository}` : "";
-const withBasePath = (path: string) => `${basePath}${path}`;
+const withBasePath = (path: string) => path;
 
-const trustPoints = [
-  "Präzise Diagnose",
-  "Saubere Werkstattprozesse",
-  "Erfahrung mit Performance-Fahrzeugen",
-  "Individuelle Betreuung",
-  "OEM-nahe Qualität",
+const credibilityItems = [
+  {
+    value: "Klare Diagnose",
+    text: "Keine überfrachteten Versprechen, sondern nachvollziehbare technische Entscheidungen.",
+  },
+  {
+    value: "Ruhige Prozesse",
+    text: "Saubere Übergaben, dokumentierte Arbeitsschritte und ein kontrollierter Ablauf.",
+  },
+  {
+    value: "Performance-Erfahrung",
+    text: "Vertraut mit Fahrzeugen, bei denen Präzision spürbar wichtiger ist als Tempo im Tagesgeschäft.",
+  },
+  {
+    value: "Direkter Kontakt",
+    text: "Kurze Wege, realistische Einschätzungen und persönliche Kommunikation ohne Werkstattfloskeln.",
+  },
 ];
 
 const services = [
   {
-    title: "Wartung & Service",
-    text: "Herstellerorientierte Serviceabläufe für Fahrzeuge, bei denen Details über Werterhalt und Vertrauen entscheiden.",
+    code: "01",
+    title: "Wartung mit Substanz",
+    text: "Servicearbeiten mit Herstellerbezug, aber ohne den anonymen Charakter großer Standardabläufe.",
   },
   {
-    title: "Diagnose & Fehlersuche",
-    text: "Systematische Analyse komplexer Fehlerbilder mit technischem Verständnis und klarer Kommunikation.",
+    code: "02",
+    title: "Diagnose statt Rätselraten",
+    text: "Fehlerbilder werden systematisch eingegrenzt, erklärt und erst dann wirtschaftlich sinnvoll gelöst.",
   },
   {
+    code: "03",
     title: "Bremsen & Fahrwerk",
-    text: "Präzise Prüfung und Montage sicherheitsrelevanter Komponenten für ein stimmiges Fahrgefühl.",
+    text: "Arbeiten an Komponenten, bei denen Fahrgefühl, Sicherheit und Präzision direkt zusammenhängen.",
   },
   {
+    code: "04",
     title: "Performance-Upgrades",
-    text: "Sinnvolle Optimierungen für Fahrzeuge, die Charakter, Fahrdynamik und Präsenz behalten sollen.",
+    text: "Gezielte technische Maßnahmen für Fahrzeuge, die mehr Charakter brauchen, nicht mehr Lautstärke.",
   },
   {
-    title: "Fahrzeugaufbereitung",
-    text: "Detailorientierte Pflege und visuelle Veredelung für einen Auftritt auf Premium-Niveau.",
+    code: "05",
+    title: "Aufbereitung & Präsenz",
+    text: "Pflege und visuelle Veredelung mit Blick auf Werterhalt, Materialwirkung und Gesamtauftritt.",
   },
   {
-    title: "Individualisierung & Umbauten",
-    text: "Maßgeschneiderte Lösungen für Kunden, die technische Qualität mit einem klaren Anspruch verbinden.",
+    code: "06",
+    title: "Umbauten mit Haltung",
+    text: "Individuelle Lösungen für Kunden, die technische Qualität höher gewichten als kurzfristige Trends.",
   },
 ];
 
-const marques = ["Porsche", "BMW M", "Mercedes-AMG", "Audi RS", "Sportwagen & Performance-Fahrzeuge"];
+const marques = [
+  { label: "Porsche", note: "für Fahrer, die Präzision sofort merken" },
+  { label: "BMW M", note: "wenn Fahrdynamik sauber abgestimmt bleiben soll" },
+  { label: "Mercedes-AMG", note: "für Leistung mit kultivierter Werkstattqualität" },
+  { label: "Audi RS", note: "für Technik, die nicht nur schnell, sondern stimmig sein muss" },
+];
 
 const detailItems = [
-  "Bremsenservice",
-  "Fahrwerksprüfung",
+  "Bremsenservice mit sauberer Dokumentation",
+  "Fahrwerksprüfung mit technischem Augenmaß",
   "Montage hochwertiger Komponenten",
-  "Sichtprüfung und Dokumentation",
+  "Kontrollierte Übergabe und transparente Empfehlung",
 ];
 
 const galleryItems = [
   {
-    label: "Performance Service",
+    label: "Servicebereich",
+    caption: "Ruhige, klare Arbeitsflächen statt Showroom-Theater.",
     image: withBasePath("/images/hero-premium-porsche-bmw.png"),
   },
   {
-    label: "Premium Workshop",
+    label: "Werkstattatelier",
+    caption: "Materialität, Ordnung und Lichtführung schaffen Vertrauen.",
     image: withBasePath("/images/brand-premium-mercedes-bmw.png"),
   },
   {
-    label: "Präzisionsarbeit",
+    label: "Detailarbeit",
+    caption: "Die Qualität zeigt sich dort, wo kaum jemand hinschaut.",
     image: withBasePath("/images/service-bmw-brake-detail.png"),
   },
 ];
@@ -80,9 +101,16 @@ const footerLinks = [
 ];
 
 export default function Home() {
+  const mobileInquiryHref = buildMailtoHref({
+    to: contactConfig.inquiryEmail,
+    subject: "Mobile Anfrage ueber die Website",
+    body: "Guten Tag,\n\nich moechte eine Anfrage an Werksraum Automotive stellen.",
+  });
+
   return (
-    <main id="top" className="relative overflow-hidden">
+    <main id="top" className="relative overflow-hidden pb-24 md:pb-0">
       <div className="pointer-events-none absolute inset-0 bg-radial-premium" />
+      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:120px_120px] opacity-[0.06]" />
       <SiteHeader />
 
       <section className="relative min-h-screen">
@@ -93,59 +121,77 @@ export default function Home() {
           priority
           className="object-cover object-center"
         />
-        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(4,5,8,0.46),rgba(4,5,8,0.82)_52%,rgba(4,5,8,0.95))]" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(210,184,148,0.15),transparent_25%)]" />
+        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(4,5,8,0.22),rgba(4,5,8,0.8)_58%,rgba(4,5,8,0.97))]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_12%,rgba(210,184,148,0.2),transparent_30%)]" />
 
         <div className="section-shell relative z-10 flex min-h-screen items-end py-28 sm:py-32">
-          <div className="grid w-full gap-10 lg:grid-cols-[1.2fr_0.8fr] lg:items-end">
-            <FadeIn className="max-w-3xl space-y-8">
-              <span className="eyebrow">High-End Fahrzeugstudio</span>
-              <div className="space-y-5">
-                <h1 className="display-title">Premium Service für Performance-Fahrzeuge</h1>
-                <p className="max-w-2xl text-lg leading-8 text-white/72 sm:text-xl">
-                  Spezialisierte Wartung, Diagnose und Individualisierung für Porsche, BMW M,
-                  Mercedes-AMG und exklusive Sportwagen.
+          <div className="grid w-full gap-10 lg:grid-cols-[1.08fr_0.92fr] lg:items-end">
+            <FadeIn className="max-w-4xl space-y-8">
+              <span className="eyebrow">Werkstattkultur für Fahrzeuge mit Anspruch</span>
+              <div className="space-y-6">
+                <p className="max-w-md text-sm uppercase tracking-[0.3em] text-white opacity-50">
+                  Österreich · Präzision statt Lautstärke
+                </p>
+                <h1 className="display-title max-w-4xl">
+                  Service für Fahrzeuge, die man nicht beiläufig abgibt.
+                </h1>
+                <p className="max-w-2xl text-lg leading-8 text-white/70 sm:text-[1.15rem]">
+                  Werksraum Automotive verbindet ruhige Werkstattprozesse, saubere Diagnose und ein
+                  hochwertiges Umfeld für Porsche, BMW M, Mercedes-AMG und exklusive
+                  Performance-Fahrzeuge.
                 </p>
               </div>
 
               <div className="flex flex-col gap-4 sm:flex-row">
                 <Link href="/check-in" className="cta-primary">
-                  Check-in
+                  Check-in starten
                 </Link>
                 <Link href="#leistungen" className="cta-secondary">
                   Leistungen ansehen
                 </Link>
               </div>
 
-              <div className="flex flex-wrap gap-3">
-                {["Performance Service", "Diagnose & Technik", "Exklusive Fahrzeugpflege"].map((badge) => (
-                  <span
-                    key={badge}
-                    className="rounded-full border border-white/10 bg-white/[0.06] px-4 py-2 text-xs uppercase tracking-[0.22em] text-white/72 backdrop-blur-md"
-                  >
-                    {badge}
-                  </span>
+              <div className="grid max-w-3xl gap-4 border-t border-white/10 pt-6 sm:grid-cols-3">
+                {[
+                  ["Diagnose", "klar kommuniziert"],
+                  ["Werkstatt", "kontrolliert organisiert"],
+                  ["Betreuung", "persönlich statt anonym"],
+                ].map(([title, text]) => (
+                  <div key={title} className="space-y-2">
+                    <p className="text-sm uppercase tracking-[0.24em] text-champagne opacity-70">{title}</p>
+                    <p className="text-sm leading-7 text-white opacity-65">{text}</p>
+                  </div>
                 ))}
               </div>
             </FadeIn>
 
-            <FadeIn delay={0.15} className="glass-panel rounded-[32px] p-6 sm:p-8">
-              <div className="space-y-6">
-                <p className="text-xs uppercase tracking-[0.28em] text-champagne/80">
-                  Premium Vertrauen
-                </p>
-                <div className="grid gap-5 sm:grid-cols-2">
-                  {trustPoints.slice(0, 4).map((item) => (
-                    <div key={item} className="rounded-3xl border border-white/8 bg-black/20 p-4">
-                      <p className="text-sm text-white/80">{item}</p>
+            <FadeIn
+              delay={0.15}
+              className="border border-white/10 bg-black/35 p-6 backdrop-blur-xl sm:p-8"
+              style={{ borderRadius: "2rem 2rem 0.5rem 2rem" }}
+            >
+              <div className="space-y-8">
+                <div className="flex items-center justify-between border-b border-white/10 pb-5">
+                  <div>
+                    <p className="text-xs uppercase tracking-[0.3em] text-champagne opacity-80">
+                      Werksraum Haltung
+                    </p>
+                    <p className="mt-2 text-xl font-medium text-white">Woran man gute Arbeit erkennt</p>
+                  </div>
+                  <span className="number-chip">01</span>
+                </div>
+
+                <div className="grid gap-4">
+                  {credibilityItems.map((item) => (
+                    <div
+                      key={item.value}
+                      className="border border-white/8 bg-white/[0.03] px-5 py-5"
+                      style={{ borderRadius: "1.35rem" }}
+                    >
+                      <p className="text-sm uppercase tracking-[0.22em] text-white opacity-45">{item.value}</p>
+                      <p className="mt-3 text-sm leading-7 text-white opacity-75">{item.text}</p>
                     </div>
                   ))}
-                </div>
-                <div className="rounded-[28px] border border-champagne/20 bg-champagne/[0.08] p-5">
-                  <p className="text-sm leading-7 text-white/70">
-                    Wir betreuen Fahrzeuge, bei denen Präzision, Erfahrung und saubere Arbeit
-                    entscheidend sind.
-                  </p>
                 </div>
               </div>
             </FadeIn>
@@ -154,21 +200,35 @@ export default function Home() {
       </section>
 
       <section className="section-shell relative z-10 py-24 sm:py-28">
-        <FadeIn className="section-copy">
-          <span className="eyebrow">Vertrauen</span>
-          <h2 className="section-title">Qualität, die man in jedem Detail spüren kann</h2>
-        </FadeIn>
+        <div className="grid gap-10 lg:grid-cols-[0.72fr_1.28fr] lg:items-start">
+          <FadeIn className="section-copy">
+            <span className="eyebrow">Vertrauen</span>
+            <h2 className="section-title">Die Seite soll nicht laut wirken. Die Arbeit auch nicht.</h2>
+            <p className="text-base leading-8 text-white/64">
+              Hochwertige Werkstattqualität zeigt sich selten in großen Gesten, sondern in der
+              Konsequenz kleiner Entscheidungen. Genau daraus entsteht Vertrauen.
+            </p>
+          </FadeIn>
 
-        <StaggerGroup className="mt-12 grid gap-5 md:grid-cols-2 xl:grid-cols-5">
-          {trustPoints.map((item) => (
-            <StaggerItem key={item}>
-              <div className="premium-card h-full">
-                <div className="mb-8 h-px w-16 bg-gradient-to-r from-champagne/80 to-transparent" />
-                <p className="text-base leading-7 text-white/80">{item}</p>
-              </div>
-            </StaggerItem>
-          ))}
-        </StaggerGroup>
+          <StaggerGroup className="grid gap-5 md:grid-cols-2">
+            {credibilityItems.map((item, index) => (
+              <StaggerItem key={item.value}>
+                <article className="editorial-card h-full">
+                  <div className="flex items-start justify-between gap-6">
+                    <div className="space-y-4">
+                      <span className="text-xs uppercase tracking-[0.28em] text-champagne opacity-70">
+                        Prinzip {index + 1}
+                      </span>
+                      <h3 className="text-2xl font-medium text-white">{item.value}</h3>
+                      <p className="leading-7 text-white/64">{item.text}</p>
+                    </div>
+                    <span className="number-chip">{`0${index + 1}`}</span>
+                  </div>
+                </article>
+              </StaggerItem>
+            ))}
+          </StaggerGroup>
+        </div>
       </section>
 
       <section
@@ -178,26 +238,29 @@ export default function Home() {
         <FadeIn className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
           <div className="section-copy">
             <span className="eyebrow">Leistungen</span>
-            <h2 className="section-title">Technische Betreuung auf Premium-Niveau</h2>
-            <p className="text-base leading-8 text-white/66">
-              Von regelmäßiger Wartung bis zu gezielten Performance-Arbeiten schaffen wir Abläufe,
-              die hochwertiger Technik und hohen Erwartungen gerecht werden.
+            <h2 className="section-title">Leistungen, die wie Werkstattleistung klingen und nicht wie Werbetext.</h2>
+            <p className="text-base leading-8 text-white/64">
+              Jede Leistung ist so gedacht, dass sie technisch sauber, wirtschaftlich nachvollziehbar
+              und im Umgang mit dem Fahrzeug respektvoll bleibt.
             </p>
           </div>
-          <p className="max-w-md text-sm leading-7 text-white/46">
-            Dunkle Materialien, klare Linien, kontrollierte Lichtakzente und ein präziser Umgang mit
-            jedem Fahrzeug prägen den gesamten Auftritt.
+          <p className="max-w-md text-sm leading-7 text-white opacity-45">
+            Keine vagen Superlative, sondern ein Auftritt, der eher an ein diskretes Studio als an
+            eine generische Autoseite erinnert.
           </p>
         </FadeIn>
 
         <StaggerGroup className="mt-12 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
           {services.map((service) => (
             <StaggerItem key={service.title}>
-              <article className="premium-card h-full rounded-[30px]">
-                <div className="space-y-5">
-                  <span className="text-xs uppercase tracking-[0.28em] text-champagne/70">
-                    Premium Service
+              <article className="service-block h-full">
+                <div className="flex items-center justify-between gap-4 border-b border-white/10 pb-5">
+                  <span className="text-xs uppercase tracking-[0.28em] text-white opacity-40">
+                    Bereich {service.code}
                   </span>
+                  <span className="number-chip">{service.code}</span>
+                </div>
+                <div className="mt-6 space-y-4">
                   <h3 className="text-2xl font-medium text-white">{service.title}</h3>
                   <p className="leading-7 text-white/64">{service.text}</p>
                 </div>
@@ -211,21 +274,22 @@ export default function Home() {
         id="fahrzeuge"
         className="section-shell relative z-10 scroll-mt-28 py-24 sm:scroll-mt-32 sm:py-28"
       >
-        <div className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
+        <div className="grid gap-8 lg:grid-cols-[0.95fr_1.05fr] lg:items-start">
           <FadeIn className="section-copy">
-            <span className="eyebrow">Spezialisiert auf Fahrzeuge</span>
-            <h2 className="section-title">Für Marken mit Charakter und Anspruch</h2>
-            <p className="text-base leading-8 text-white/66">
-              Wir betreuen Fahrzeuge, bei denen Präzision, Erfahrung und saubere Arbeit
-              entscheidend sind.
+            <span className="eyebrow">Fahrzeuge</span>
+            <h2 className="section-title">Für Marken, bei denen Nuancen wichtiger sind als Schlagworte.</h2>
+            <p className="text-base leading-8 text-white/64">
+              Werksraum Automotive richtet sich an Fahrzeuge, bei denen Fahrgefühl, Materialqualität
+              und technisches Vertrauen im Vordergrund stehen.
             </p>
           </FadeIn>
 
-          <StaggerGroup className="grid gap-4 sm:grid-cols-2">
+          <StaggerGroup className="grid gap-4">
             {marques.map((marque) => (
-              <StaggerItem key={marque}>
-                <div className="glass-panel rounded-[26px] px-5 py-6">
-                  <p className="text-lg font-medium text-white">{marque}</p>
+              <StaggerItem key={marque.label}>
+                <div className="brand-strip">
+                  <p className="text-xl font-medium text-white">{marque.label}</p>
+                  <p className="mt-2 text-sm leading-7 text-white opacity-55">{marque.note}</p>
                 </div>
               </StaggerItem>
             ))}
@@ -234,8 +298,8 @@ export default function Home() {
       </section>
 
       <section className="section-shell relative z-10 py-24 sm:py-28">
-        <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
-          <FadeIn className="relative overflow-hidden rounded-[36px] border border-white/10">
+        <div className="grid gap-8 lg:grid-cols-[1.08fr_0.92fr] lg:items-center">
+          <FadeIn className="relative overflow-hidden rounded-[40px] border border-white/10">
             <Image
               src={withBasePath("/images/brand-premium-mercedes-bmw.png")}
               alt="Premium Werkstatt Atelier"
@@ -243,20 +307,22 @@ export default function Home() {
               height={1000}
               className="h-full w-full object-cover"
             />
-            <div className="absolute inset-0 bg-[linear-gradient(180deg,transparent,rgba(4,5,8,0.55))]" />
+            <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(6,7,10,0.02),rgba(6,7,10,0.62))]" />
           </FadeIn>
 
           <FadeIn delay={0.1} className="section-copy">
             <span className="eyebrow">Werkstatt / Atelier</span>
-            <h2 className="section-title">Eine Werkstatt, die Qualität sichtbar macht</h2>
-            <p className="text-base leading-8 text-white/66">
-              Moderne Ausstattung, strukturierte Abläufe und ein Umfeld, das dem Anspruch
-              hochwertiger Fahrzeuge gerecht wird.
+            <h2 className="section-title">Ein Umfeld, das Ruhe ausstrahlt, bevor überhaupt gesprochen wird.</h2>
+            <p className="text-base leading-8 text-white/64">
+              Materialität, Licht, Ordnung und saubere Übergänge gehören hier nicht zur Deko,
+              sondern zum Vertrauensaufbau. Das Ambiente stützt den Qualitätsanspruch, statt ihn
+              nur zu behaupten.
             </p>
-            <div className="glass-panel rounded-[28px] p-6">
-              <p className="text-sm leading-7 text-white/62">
-                Der Auftritt verbindet Motorsport-Lounge, High-End Detailing Studio und technische
-                Werkstattkultur zu einem ruhigen, vertrauensvollen Erlebnis.
+            <div className="quote-panel">
+              <p className="text-sm uppercase tracking-[0.24em] text-champagne opacity-80">Werkstattnotiz</p>
+              <p className="mt-4 text-base leading-8 text-white/72">
+                Gute Arbeit wirkt selten dramatisch. Sie wirkt selbstverständlich, weil jeder
+                Schritt vorbereitet, geprüft und bewusst entschieden wurde.
               </p>
             </div>
           </FadeIn>
@@ -264,25 +330,26 @@ export default function Home() {
       </section>
 
       <section className="section-shell relative z-10 py-24 sm:py-28">
-        <div className="grid gap-8 lg:grid-cols-[0.92fr_1.08fr] lg:items-center">
+        <div className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
           <FadeIn className="section-copy">
             <span className="eyebrow">Detail-Service</span>
-            <h2 className="section-title">Präzision für Komponenten, die keine Kompromisse kennen</h2>
-            <p className="text-base leading-8 text-white/66">
-              Von sensiblen Bremsenarbeiten bis zur kontrollierten Montage hochwertiger Komponenten
-              steht jeder Arbeitsschritt für Nachvollziehbarkeit und Sorgfalt.
+            <h2 className="section-title">Präzision zeigt sich meistens dort, wo niemand Applaus gibt.</h2>
+            <p className="text-base leading-8 text-white/64">
+              Genau an diesen Stellen entscheidet sich, ob Arbeit nur ordentlich aussieht oder sich
+              später auch wirklich richtig fährt.
             </p>
 
             <div className="grid gap-4 sm:grid-cols-2">
-              {detailItems.map((item) => (
-                <div key={item} className="glass-panel rounded-[24px] px-5 py-5">
-                  <p className="text-sm uppercase tracking-[0.18em] text-white/80">{item}</p>
+              {detailItems.map((item, index) => (
+                <div key={item} className="detail-tile">
+                  <p className="text-xs uppercase tracking-[0.24em] text-white opacity-40">{`0${index + 1}`}</p>
+                  <p className="mt-3 text-sm leading-7 text-white opacity-80">{item}</p>
                 </div>
               ))}
             </div>
           </FadeIn>
 
-          <FadeIn delay={0.12} className="relative overflow-hidden rounded-[36px] border border-white/10">
+          <FadeIn delay={0.12} className="relative overflow-hidden rounded-[40px] border border-white/10">
             <Image
               src={withBasePath("/images/service-bmw-brake-detail.png")}
               alt="Detailarbeit an Bremsen und Komponenten"
@@ -290,7 +357,7 @@ export default function Home() {
               height={1000}
               className="h-full w-full object-cover"
             />
-            <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(4,5,8,0.12),rgba(4,5,8,0.7))]" />
+            <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(4,5,8,0.08),rgba(4,5,8,0.72))]" />
           </FadeIn>
         </div>
       </section>
@@ -301,7 +368,7 @@ export default function Home() {
       >
         <FadeIn className="section-copy">
           <span className="eyebrow">Galerie</span>
-          <h2 className="section-title">Ein Eindruck von Atmosphäre, Technik und Sorgfalt</h2>
+          <h2 className="section-title">Keine Stock-Atmosphäre, sondern Bilder mit erkennbarer Haltung.</h2>
         </FadeIn>
 
         <div className="mt-12 grid gap-5 lg:grid-cols-[1.15fr_0.85fr]">
@@ -309,20 +376,19 @@ export default function Home() {
             <FadeIn
               key={item.label}
               delay={index * 0.08}
-              className={`${index === 0 ? "lg:row-span-2" : ""} group relative overflow-hidden rounded-[32px] border border-white/10`}
+              className={`${index === 0 ? "lg:row-span-2" : ""} group relative overflow-hidden rounded-[36px] border border-white/10`}
             >
-              <div className="relative min-h-[320px]">
+              <div className="relative min-h-[360px]">
                 <Image
                   src={item.image}
                   alt={item.label}
                   fill
-                  className="object-cover transition duration-700 group-hover:scale-105"
+                  className="object-cover transition duration-700 group-hover:scale-[1.03]"
                 />
-                <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(4,5,8,0.08),rgba(4,5,8,0.7))]" />
-                <div className="absolute inset-x-0 bottom-0 p-6">
-                  <span className="inline-flex rounded-full border border-white/12 bg-black/25 px-4 py-2 text-xs uppercase tracking-[0.24em] text-white/82 backdrop-blur-md">
-                    {item.label}
-                  </span>
+                <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(4,5,8,0.02),rgba(4,5,8,0.78))]" />
+                <div className="absolute inset-x-0 bottom-0 p-7">
+                  <p className="text-xs uppercase tracking-[0.28em] text-champagne opacity-80">{item.label}</p>
+                  <p className="mt-3 max-w-sm text-sm leading-7 text-white/72">{item.caption}</p>
                 </div>
               </div>
             </FadeIn>
@@ -334,30 +400,31 @@ export default function Home() {
         id="ueber-uns"
         className="section-shell relative z-10 scroll-mt-28 py-24 sm:scroll-mt-32 sm:py-28"
       >
-        <div className="glass-panel rounded-[36px] px-6 py-10 sm:px-10 sm:py-14">
+        <div className="editorial-frame">
           <FadeIn className="mx-auto max-w-3xl text-center">
             <span className="eyebrow justify-center">Über uns</span>
-            <h2 className="section-title mt-5">Werkraum Automotive steht für hochwertige Arbeit an exklusiven Fahrzeugen</h2>
+            <h2 className="section-title mt-5">
+              Werksraum Automotive steht für ein hochwertiges Maß an Sorgfalt, nicht für Masse.
+            </h2>
             <p className="mt-6 text-base leading-8 text-white/68">
-              Unser Anspruch ist nicht Masse, sondern Genauigkeit, Transparenz und ein Ergebnis, das
-              dem Fahrzeug gerecht wird. Wir verbinden technisches Verständnis mit einem
-              hochwertigen Umfeld, in dem Kunden und Fahrzeuge mit der nötigen Aufmerksamkeit
-              betreut werden.
+              Der Anspruch ist schlicht: Fahrzeuge mit Respekt behandeln, technische Entscheidungen
+              sauber treffen und einen Auftritt schaffen, der diese Haltung sichtbar macht. Nicht
+              protzig, sondern präzise.
             </p>
           </FadeIn>
         </div>
       </section>
 
       <section className="section-shell relative z-10 py-24 sm:py-28">
-        <FadeIn className="relative overflow-hidden rounded-[36px] border border-champagne/20 bg-[linear-gradient(135deg,rgba(210,184,148,0.12),rgba(255,255,255,0.04))] px-6 py-10 sm:px-10 sm:py-14">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(210,184,148,0.18),transparent_35%)]" />
+        <FadeIn className="cta-stage">
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(210,184,148,0.2),transparent_34%)]" />
           <div className="relative flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
             <div className="max-w-2xl space-y-5">
               <span className="eyebrow">Termin anfragen</span>
-              <h2 className="section-title">Bereit für Service auf Premium-Niveau?</h2>
+              <h2 className="section-title">Wenn ein Fahrzeug richtig betreut werden soll, beginnt es mit einem guten Erstgespräch.</h2>
               <p className="text-base leading-8 text-white/68">
-                Senden Sie uns eine Anfrage mit Fahrzeugmodell und gewünschter Leistung. Wir
-                melden uns persönlich mit einer passenden Einschätzung.
+                Senden Sie uns Modell, Ausgangslage und Wunschleistung. Wir antworten nicht mit
+                Marketingtext, sondern mit einer realistischen Einschätzung.
               </p>
             </div>
             <Link href="/check-in" className="cta-primary">
@@ -371,24 +438,36 @@ export default function Home() {
         id="kontakt"
         className="section-shell relative z-10 scroll-mt-28 py-24 sm:scroll-mt-32 sm:py-28"
       >
-        <div className="grid gap-8 lg:grid-cols-[0.88fr_1.12fr]">
+        <div className="grid gap-8 lg:grid-cols-[0.82fr_1.18fr]">
           <FadeIn className="section-copy">
             <span className="eyebrow">Kontakt</span>
-            <h2 className="section-title">Persönliche Beratung für Ihr Fahrzeug</h2>
-            <p className="text-base leading-8 text-white/66">
-              Teilen Sie uns Ihr Anliegen und den gewünschten Zeitraum mit. Wir melden uns direkt
-              und mit einer realistischen Einschätzung zurück.
+            <h2 className="section-title">Persönliche Beratung statt Werkstatt-Hotline.</h2>
+            <p className="text-base leading-8 text-white/64">
+              Teilen Sie uns Ihr Anliegen mit. Wir melden uns direkt, klar und ohne unnötige
+              Umwege zurück.
             </p>
 
-            <div className="grid gap-4 pt-4">
+              <div className="grid gap-4 pt-4">
               {[
-                ["Telefon", "+43 000 000000"],
-                ["E-Mail", "info@werkraum.at"],
-                ["Standort", "Österreich"],
+                ["E-Mail", contactConfig.inquiryEmail],
+                ["Standort", contactConfig.location],
               ].map(([label, value]) => (
-                <div key={label} className="glass-panel rounded-[24px] px-5 py-5">
-                  <p className="text-xs uppercase tracking-[0.24em] text-white/45">{label}</p>
-                  <p className="mt-2 text-lg text-white">{value}</p>
+                <div key={label} className="contact-tile">
+                  <p className="text-xs uppercase tracking-[0.24em] text-white opacity-40">{label}</p>
+                  {label === "E-Mail" ? (
+                    <a
+                      href={buildMailtoHref({
+                        to: contactConfig.inquiryEmail,
+                        subject: "Anfrage ueber die Website",
+                        body: "Guten Tag,\n\nich moechte eine Anfrage an Werksraum Automotive stellen.",
+                      })}
+                      className="mt-3 inline-flex text-xl text-white transition hover:text-champagne"
+                    >
+                      {value}
+                    </a>
+                  ) : (
+                    <p className="mt-3 text-xl text-white">{value}</p>
+                  )}
                 </div>
               ))}
             </div>
@@ -401,20 +480,20 @@ export default function Home() {
       </section>
 
       <footer className="section-shell relative z-20 isolate border-t border-white/8 py-10">
-        <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
-          <div className="space-y-3">
-            <p className="text-sm font-semibold uppercase tracking-[0.32em] text-white">
-              Werkraum Automotive
+        <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
+          <div className="space-y-4">
+            <p className="text-sm font-semibold uppercase tracking-[0.34em] text-white">
+              Werksraum Automotive
             </p>
-            <p className="max-w-md text-sm leading-7 text-white/48">
-              Premium Service für exklusive Fahrzeuge mit einem Fokus auf Präzision,
-              Transparenz und Vertrauen.
+            <p className="max-w-md text-sm leading-7 text-white opacity-45">
+              Premium Service für exklusive Fahrzeuge mit einer klaren Haltung zu Präzision,
+              Transparenz und Werkstattkultur.
             </p>
           </div>
 
           <nav
             aria-label="Footer Navigation"
-            className="relative z-20 flex flex-wrap gap-5 text-sm text-white/52"
+            className="relative z-20 flex flex-wrap gap-5 text-sm text-white opacity-55"
           >
             {footerLinks.map((item) => (
               <Link
@@ -428,6 +507,23 @@ export default function Home() {
           </nav>
         </div>
       </footer>
+
+      <div className="fixed inset-x-0 bottom-0 z-50 border-t border-white/10 bg-[rgba(5,6,8,0.9)] px-4 py-3 backdrop-blur-2xl md:hidden">
+        <div className="mx-auto grid max-w-md grid-cols-[1.05fr_0.95fr] gap-3">
+          <a
+            href={mobileInquiryHref}
+            className="inline-flex min-h-12 items-center justify-center rounded-full bg-champagne px-4 text-sm font-semibold text-obsidian shadow-[0_12px_32px_rgba(210,184,148,0.22)]"
+          >
+            Anfrage senden
+          </a>
+          <Link
+            href="/check-in"
+            className="inline-flex min-h-12 items-center justify-center rounded-full border border-white/15 bg-white/5 px-4 text-sm font-semibold text-white"
+          >
+            Check-in
+          </Link>
+        </div>
+      </div>
     </main>
   );
 }

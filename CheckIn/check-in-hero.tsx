@@ -16,7 +16,7 @@ export function CheckInHero({ imageSrc }: CheckInHeroProps) {
       <div className="absolute inset-0">
         <Image
           src={imageSrc}
-          alt="Digitale Fahrzeugannahme bei Werkraum Automotive"
+          alt="Digitale Fahrzeugannahme bei Werksraum Automotive"
           fill
           priority
           className="object-cover object-center"

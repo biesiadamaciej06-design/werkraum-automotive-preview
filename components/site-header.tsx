@@ -29,19 +29,27 @@ export function SiteHeader() {
       transition={{ duration: 0.3 }}
     >
       <div
-        className={`section-shell flex items-center justify-between rounded-full px-5 py-3 transition duration-300 ${
+        className={`section-shell flex items-center justify-between px-5 py-3 transition duration-300 ${
           scrolled
-            ? "border border-white/10 bg-black/45 shadow-aura backdrop-blur-2xl"
-            : "border border-transparent bg-transparent"
+            ? "border border-white/10 bg-[rgba(8,10,14,0.7)] shadow-aura backdrop-blur-2xl"
+            : "border border-white/10 bg-[rgba(8,10,14,0.18)] backdrop-blur-md"
         }`}
+        style={{ borderRadius: "999px" }}
       >
-        <Link href="#top" className="text-sm font-semibold uppercase tracking-[0.32em] text-white">
-          Werkraum Automotive
+        <Link href="#top" className="flex items-center gap-3 text-white">
+          <span className="h-2 w-2 rounded-full bg-champagne" />
+          <span className="text-sm font-semibold uppercase tracking-[0.32em]">
+            Werksraum Automotive
+          </span>
         </Link>
 
-        <nav className="hidden items-center gap-8 text-sm text-white/72 lg:flex">
+        <nav className="hidden items-center gap-8 text-sm text-white/70 lg:flex">
           {navItems.map((item) => (
-            <Link key={item.href} href={item.href} className="transition hover:text-white">
+            <Link
+              key={item.href}
+              href={item.href}
+              className="transition duration-300 hover:text-white"
+            >
               {item.label}
             </Link>
           ))}

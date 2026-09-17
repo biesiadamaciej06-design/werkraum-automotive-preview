@@ -1,10 +1,11 @@
 import Link from "next/link";
+import { contactConfig } from "@/lib/contact";
 
 const controllerDetails = [
-  "Verantwortliche Stelle: [Firmenname / Name der Betreiberin oder des Betreibers]",
-  "Anschrift: [Straße, Hausnummer, PLZ, Ort, Land]",
-  "E-Mail: [E-Mail-Adresse]",
-  "Telefon: [Telefonnummer]",
+  `Verantwortliche Person: ${contactConfig.owner}`,
+  `Geschäftsbezeichnung: ${contactConfig.businessName}`,
+  `Anschrift: ${contactConfig.streetAddress}, ${contactConfig.postalCode} ${contactConfig.city}, ${contactConfig.country}`,
+  `E-Mail: ${contactConfig.inquiryEmail}`,
 ];
 
 const rights = [
@@ -47,10 +48,6 @@ export default function DatenschutzPage() {
                 beim Besuch dieser Website verarbeitet werden, zu welchen Zwecken dies geschieht
                 und welche Rechte Ihnen nach der Datenschutz-Grundverordnung (DSGVO) zustehen.
               </p>
-              <p className="text-sm leading-7 text-white/50">
-                Bitte ergänzen Sie vor Veröffentlichung insbesondere die in eckigen Klammern
-                markierten Unternehmens- und Kontaktdaten.
-              </p>
             </div>
 
             <section className="space-y-4">
@@ -80,9 +77,11 @@ export default function DatenschutzPage() {
                   Webauftritt).
                 </p>
                 <p>
-                  Bitte ergänzen Sie hier vor Livegang den tatsächlich eingesetzten Hosting-Anbieter,
-                  z. B. Name, Anschrift und gegebenenfalls einen Vertrag zur Auftragsverarbeitung,
-                  sofern ein solcher Anbieter personenbezogene Daten in Ihrem Auftrag verarbeitet.
+                  Diese Website wird über GitHub Pages bereitgestellt. Anbieter ist GitHub, Inc.,
+                  88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, USA. Dabei können
+                  technisch erforderliche Zugriffsdaten durch GitHub verarbeitet und in die USA
+                  übermittelt werden. Weitere Informationen enthält die Datenschutzinformation
+                  von GitHub.
                 </p>
               </div>
             </section>
@@ -119,11 +118,13 @@ export default function DatenschutzPage() {
                   sachgerechten Bearbeitung von Anfragen.
                 </p>
                 <p>
-                  Das auf dieser Website sichtbare Kontaktformular dient derzeit nach aktuellem
-                  technischen Stand lediglich der Darstellung und übermittelt momentan keine Daten
-                  serverseitig an uns. Sobald eine aktive Formularübermittlung eingerichtet wird,
-                  sind diese Datenschutzhinweise um die konkret eingesetzte technische Abwicklung,
-                  Empfänger, Aufbewahrungsdauer und gegebenenfalls Auftragsverarbeiter zu ergänzen.
+                  Das auf dieser Website eingesetzte Kontaktformular erstellt derzeit einen
+                  E-Mail-Entwurf im lokal eingerichteten E-Mail-Programm der nutzenden Person
+                  (zum Beispiel Outlook oder Apple Mail). Die eingegebenen Daten werden dabei nicht
+                  über einen eigenen Server dieser Website verarbeitet, sondern erst mit dem
+                  aktiven Versand der E-Mail an uns übermittelt. Wenn später eine direkte
+                  serverseitige Formularübermittlung eingerichtet wird, werden diese Hinweise um die
+                  konkret eingesetzte technische Abwicklung, Empfänger und Speicherdauer ergänzt.
                 </p>
               </div>
             </section>
@@ -173,9 +174,9 @@ export default function DatenschutzPage() {
                   bestehen.
                 </p>
                 <p>
-                  Wenn Sie Dienste von Anbietern außerhalb der EU/des EWR einsetzen, sollte an
-                  dieser Stelle konkret ergänzt werden, an wen übermittelt wird und auf welcher
-                  Rechtsgrundlage dies geschieht.
+                  Beim Hosting über GitHub Pages kann eine Verarbeitung durch GitHub in den USA
+                  stattfinden. GitHub informiert in seiner Datenschutzinformation über die dabei
+                  eingesetzten Garantien und Übermittlungsmechanismen.
                 </p>
               </div>
             </section>
@@ -217,7 +218,7 @@ export default function DatenschutzPage() {
             <section className="space-y-4">
               <h2 className="text-2xl font-medium text-white">10. Stand dieser Datenschutzerklärung</h2>
               <p className="text-sm leading-7 text-white/72">
-                Stand: 13. Juni 2026. Wir behalten uns vor, diese Datenschutzerklärung anzupassen,
+                Stand: 17. September 2026. Wir behalten uns vor, diese Datenschutzerklärung anzupassen,
                 wenn sich technische Funktionen, eingesetzte Dienste oder rechtliche Anforderungen
                 ändern.
               </p>

@@ -12,6 +12,8 @@
   --line-strong: rgba(210, 184, 148, 0.24);
   --accent: #d2b894;
   --accent-soft: rgba(210, 184, 148, 0.14);
+  --panel: rgba(14, 16, 20, 0.82);
+  --panel-soft: rgba(255, 255, 255, 0.04);
 }
 
 * {
@@ -26,10 +28,11 @@ body {
   margin: 0;
   min-height: 100vh;
   background:
-    radial-gradient(circle at top, rgba(210, 184, 148, 0.12), transparent 24%),
-    linear-gradient(180deg, #07080a 0%, #0a0c0f 38%, #050608 100%);
+    radial-gradient(circle at top, rgba(210, 184, 148, 0.1), transparent 22%),
+    linear-gradient(180deg, #07080a 0%, #090b0e 34%, #050608 100%);
   color: var(--foreground);
-  font-family: "Avenir Next", "Segoe UI", sans-serif;
+  font-family: "Neue Haas Grotesk Text Pro", "Avenir Next", "Segoe UI", sans-serif;
+  letter-spacing: 0.01em;
 }
 
 a {
@@ -78,7 +81,8 @@ input[type="date"]::-moz-focus-inner {
   }
 
   .eyebrow {
-    @apply inline-flex items-center gap-3 text-xs uppercase tracking-[0.35em] text-champagne/80;
+    @apply inline-flex items-center gap-3 text-[11px] uppercase tracking-[0.34em] text-champagne;
+    opacity: 0.78;
   }
 
   .eyebrow::before {
@@ -87,13 +91,15 @@ input[type="date"]::-moz-focus-inner {
   }
 
   .display-title {
-    font-family: "Iowan Old Style", "Palatino Linotype", serif;
-    @apply text-4xl font-semibold leading-tight text-white sm:text-5xl lg:text-6xl;
+    font-family: "Iowan Old Style", "Baskerville", "Palatino Linotype", serif;
+    @apply text-5xl font-semibold leading-[0.95] text-white sm:text-6xl lg:text-7xl;
+    letter-spacing: -0.03em;
   }
 
   .section-title {
-    font-family: "Iowan Old Style", "Palatino Linotype", serif;
-    @apply text-3xl font-semibold leading-tight text-white sm:text-4xl;
+    font-family: "Iowan Old Style", "Baskerville", "Palatino Linotype", serif;
+    @apply text-3xl font-semibold leading-[1.02] text-white sm:text-4xl;
+    letter-spacing: -0.025em;
   }
 
   .glass-panel {
@@ -101,6 +107,14 @@ input[type="date"]::-moz-focus-inner {
     box-shadow:
       inset 0 1px 0 rgba(255, 255, 255, 0.08),
       0 20px 60px rgba(0, 0, 0, 0.32);
+  }
+
+  .editorial-card {
+    @apply relative overflow-hidden border border-white/10 bg-[rgba(14,16,20,0.76)] p-7 backdrop-blur-xl transition duration-500;
+    border-radius: 2rem 2rem 0.75rem 2rem;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.06),
+      0 20px 48px rgba(0, 0, 0, 0.28);
   }
 
   .premium-card {
@@ -130,5 +144,51 @@ input[type="date"]::-moz-focus-inner {
 
   .cta-secondary {
     @apply inline-flex items-center justify-center rounded-full border border-white/15 bg-white/5 px-6 py-3 text-sm font-medium text-white transition duration-300 hover:-translate-y-0.5 hover:border-champagne/40 hover:bg-white/10;
+  }
+
+  .number-chip {
+    @apply inline-flex h-11 min-w-11 items-center justify-center rounded-full border border-white/10 bg-white/[0.04] px-3 text-xs uppercase tracking-[0.25em] text-white;
+    opacity: 0.58;
+  }
+
+  .service-block {
+    @apply h-full border border-white/10 bg-[rgba(15,17,21,0.86)] p-7 backdrop-blur-xl;
+    border-radius: 1.6rem 1.6rem 0.6rem 1.6rem;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.06),
+      0 18px 42px rgba(0, 0, 0, 0.25);
+  }
+
+  .brand-strip {
+    @apply border border-white/10 bg-white/[0.03] px-6 py-6 backdrop-blur-md;
+    border-radius: 1.5rem;
+  }
+
+  .quote-panel {
+    @apply mt-8 border-l border-champagne/40 bg-white/[0.03] px-6 py-6;
+    border-radius: 0 1.5rem 1.5rem 0;
+  }
+
+  .detail-tile {
+    @apply border border-white/10 bg-white/[0.03] px-5 py-5;
+    border-radius: 1.35rem;
+  }
+
+  .editorial-frame {
+    @apply border border-white/10 bg-[rgba(14,16,20,0.72)] px-6 py-10 backdrop-blur-xl sm:px-10 sm:py-14;
+    border-radius: 2.5rem;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.06),
+      0 22px 56px rgba(0, 0, 0, 0.28);
+  }
+
+  .cta-stage {
+    @apply relative overflow-hidden border border-champagne/20 bg-[linear-gradient(135deg,rgba(210,184,148,0.1),rgba(255,255,255,0.03))] px-6 py-10 sm:px-10 sm:py-14;
+    border-radius: 2.5rem;
+  }
+
+  .contact-tile {
+    @apply border border-white/10 bg-[rgba(255,255,255,0.03)] px-5 py-5 backdrop-blur-md;
+    border-radius: 1.4rem;
   }
 }

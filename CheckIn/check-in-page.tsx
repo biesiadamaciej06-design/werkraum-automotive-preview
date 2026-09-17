@@ -5,6 +5,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { CheckInHero } from "@/CheckIn/check-in-hero";
 import { StepProgress } from "@/CheckIn/step-progress";
+import { buildMailtoHref, contactConfig } from "@/lib/contact";
 
 type FileItem = {
   id: string;
@@ -45,7 +46,7 @@ type CheckInData = {
   acceptPrivacy: boolean;
 };
 
-const STORAGE_KEY = "werkraum-checkin-v1";
+const STORAGE_KEY = "werksraum-checkin-v1";
 
 const stepItems = [
   { id: "customer", number: 1, title: "Kundendaten" },
@@ -342,6 +343,50 @@ export function CheckInPage({ heroImageSrc }: CheckInPageProps) {
       return;
     }
 
+    const body = [
+      "Neuer digitaler Fahrzeug-Check-in",
+      "",
+      "Kundendaten",
+      `Name: ${`${formData.firstName} ${formData.lastName}`.trim()}`,
+      `Telefon: ${formData.phone}`,
+      `E-Mail: ${formData.email}`,
+      `Kontaktwunsch: ${formData.preferredContact}`,
+      "",
+      "Fahrzeugdaten",
+      `Fahrzeug: ${[formData.brand, formData.model].filter(Boolean).join(" ")}`,
+      `Erstzulassung: ${formData.firstRegistration}`,
+      `Kennzeichen: ${formData.licensePlate}`,
+      `VIN: ${formData.vin}`,
+      `Kilometerstand: ${formData.mileage}`,
+      `Kraftstoff: ${formData.fuelType}`,
+      `Tank / Akku: ${formData.fuelLevel}`,
+      "",
+      "Anliegen",
+      `Servicewunsch: ${formData.serviceRequest.join(", ")}`,
+      `Beschreibung: ${formData.requestDescription}`,
+      `Kostenlimit brutto: ${formData.budgetLimit}`,
+      `Wunschtermin: ${formData.preferredDate}`,
+      `Ersatzmobilitaet: ${formData.replacementMobility}`,
+      `Gegenstaende im Fahrzeug: ${formData.itemsInVehicle}`,
+      `Seit wann: ${formData.issueSince}`,
+      `Verhalten: ${formData.issueFrequency}`,
+      `Warnlampen: ${formData.warningLights}`,
+      `Warnmeldung: ${formData.warningDescription}`,
+      "",
+      "Uploads",
+      formData.files.damageImages.length
+        ? formData.files.damageImages.map((item) => `- ${item.name}`).join("\n")
+        : "Keine Dateien im Entwurf uebergeben. Bitte bei Bedarf manuell anhaengen.",
+    ].join("\n");
+
+    if (typeof window !== "undefined") {
+      window.location.href = buildMailtoHref({
+        to: contactConfig.checkInEmail,
+        subject: `Check-in${formData.licensePlate ? ` - ${formData.licensePlate}` : ""}`,
+        body,
+      });
+    }
+
     if (typeof window !== "undefined") {
       window.localStorage.removeItem(STORAGE_KEY);
     }
@@ -356,7 +401,7 @@ export function CheckInPage({ heroImageSrc }: CheckInPageProps) {
       <header className="fixed inset-x-0 top-0 z-50 px-4 py-4 sm:px-6">
         <div className="section-shell flex items-center justify-between rounded-full border border-white/10 bg-black/40 px-5 py-3 shadow-aura backdrop-blur-2xl">
           <Link href="/" className="text-sm font-semibold uppercase tracking-[0.32em] text-white">
-            Werkraum Automotive
+            Werksraum Automotive
           </Link>
 
           <div className="flex items-center gap-3">
@@ -374,10 +419,11 @@ export function CheckInPage({ heroImageSrc }: CheckInPageProps) {
         <section className="section-shell relative z-10 flex min-h-screen items-center py-32">
           <div className="glass-panel mx-auto max-w-3xl rounded-[36px] p-8 text-center sm:p-12">
             <span className="eyebrow justify-center">Bestätigung</span>
-            <h1 className="section-title mt-5">Check-in erfolgreich übermittelt</h1>
+            <h1 className="section-title mt-5">Check-in-Entwurf geöffnet</h1>
             <p className="mx-auto mt-6 max-w-2xl text-base leading-8 text-white/68">
-              Vielen Dank. Wir haben deine Angaben erhalten und bereiten deinen Termin
-              bestmöglich vor. Unser Team meldet sich persönlich bei dir.
+              Ihr E-Mail-Programm wurde mit einem Entwurf an {contactConfig.checkInEmail} geöffnet.
+              Bitte pruefen Sie den Inhalt und senden Sie die E-Mail anschliessend ab. Hochgeladene
+              Dateien muessen bei Bedarf manuell angehaengt werden.
             </p>
             <div className="mt-10">
               <Link href="/" className="cta-primary">
