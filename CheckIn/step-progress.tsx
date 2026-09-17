@@ -41,10 +41,9 @@ export function StepProgress({ currentStep, steps }: StepProgressProps) {
                   {step.number}
                 </motion.div>
 
-                <div>
-                  <p className="text-[11px] uppercase tracking-[0.24em] text-white/38">Schritt</p>
-                  <p className={`text-sm ${isActive ? "text-white" : "text-white/62"}`}>{step.title}</p>
-                </div>
+                <p className={`text-base font-medium ${isActive ? "text-white" : "text-white/62"}`}>
+                  {step.title}
+                </p>
               </div>
 
               {index < steps.length - 1 ? (
