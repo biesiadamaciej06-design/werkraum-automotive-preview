@@ -13,11 +13,11 @@ const credibilityItems = [
     text: "Keine überfrachteten Versprechen, sondern nachvollziehbare technische Entscheidungen.",
   },
   {
-    value: "Ruhige Prozesse",
+    value: "Kontrollierte Prozesse",
     text: "Saubere Übergaben, dokumentierte Arbeitsschritte und ein kontrollierter Ablauf.",
   },
   {
-    value: "Performance-Erfahrung",
+    value: "Premium-Erfahrung",
     text: "Vertraut mit Fahrzeugen, bei denen Präzision spürbar wichtiger ist als Tempo im Tagesgeschäft.",
   },
   {
@@ -171,14 +171,10 @@ export default function Home() {
               style={{ borderRadius: "2rem 2rem 0.5rem 2rem" }}
             >
               <div className="space-y-8">
-                <div className="flex items-center justify-between border-b border-white/10 pb-5">
-                  <div>
-                    <p className="text-xs uppercase tracking-[0.3em] text-champagne opacity-80">
-                      Werksraum Haltung
-                    </p>
-                    <p className="mt-2 text-xl font-medium text-white">Woran man gute Arbeit erkennt</p>
-                  </div>
-                  <span className="number-chip">01</span>
+                <div className="border-b border-white/10 pb-5">
+                  <p className="text-lg font-semibold uppercase tracking-[0.3em] text-champagne opacity-80">
+                    Unsere Haltung
+                  </p>
                 </div>
 
                 <div className="grid gap-4">
