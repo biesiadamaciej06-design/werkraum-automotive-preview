@@ -55,9 +55,6 @@ export function SiteHeader() {
           ))}
         </nav>
 
-        <Link href="/check-in" className="cta-primary hidden sm:inline-flex">
-          Check-in
-        </Link>
       </div>
     </motion.header>
   );

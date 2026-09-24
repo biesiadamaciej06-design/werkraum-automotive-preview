@@ -130,9 +130,6 @@ export default function Home() {
               </div>
 
               <div className="flex flex-col gap-4 sm:flex-row">
-                <Link href="/check-in" className="cta-primary">
-                  Check-in starten
-                </Link>
                 <Link href="#leistungen" className="cta-secondary">
                   Leistungen ansehen
                 </Link>
@@ -357,8 +354,8 @@ export default function Home() {
                 Marketingtext, sondern mit einer realistischen Einschätzung.
               </p>
             </div>
-            <Link href="/check-in" className="cta-primary">
-              Check-in
+            <Link href="#kontakt" className="cta-primary">
+              Anfrage senden
             </Link>
           </div>
         </FadeIn>
@@ -438,19 +435,13 @@ export default function Home() {
       </footer>
 
       <div className="fixed inset-x-0 bottom-0 z-50 border-t border-white/10 bg-[rgba(5,6,8,0.9)] px-4 py-3 backdrop-blur-2xl md:hidden">
-        <div className="mx-auto grid max-w-md grid-cols-[1.05fr_0.95fr] gap-3">
+        <div className="mx-auto max-w-md">
           <a
             href={mobileInquiryHref}
-            className="inline-flex min-h-12 items-center justify-center rounded-full bg-champagne px-4 text-sm font-semibold text-obsidian shadow-[0_12px_32px_rgba(210,184,148,0.22)]"
+            className="inline-flex min-h-12 w-full items-center justify-center rounded-full bg-champagne px-4 text-sm font-semibold text-obsidian shadow-[0_12px_32px_rgba(210,184,148,0.22)]"
           >
             Anfrage senden
           </a>
-          <Link
-            href="/check-in"
-            className="inline-flex min-h-12 items-center justify-center rounded-full border border-white/15 bg-white/5 px-4 text-sm font-semibold text-white"
-          >
-            Check-in
-          </Link>
         </div>
       </div>
     </main>
