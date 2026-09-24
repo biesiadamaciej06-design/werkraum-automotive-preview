@@ -108,18 +108,17 @@ export default function Home() {
         <div className="section-shell relative z-10 flex min-h-screen items-end py-28 sm:py-32">
           <div className="grid w-full gap-10 lg:grid-cols-[1.08fr_0.92fr] lg:items-end">
             <FadeIn className="max-w-4xl space-y-8">
-              <span className="eyebrow">Werkstattkultur für Fahrzeuge mit Anspruch</span>
+              <span className="eyebrow">Vertrauen durch Sorgfalt</span>
               <div className="space-y-6">
                 <p className="max-w-md text-sm uppercase tracking-[0.3em] text-white opacity-50">
                   Österreich · Präzision statt Lautstärke
                 </p>
                 <h1 className="display-title max-w-4xl">
-                  Service für Fahrzeuge, die man nicht beiläufig abgibt.
+                  Service, bei dem Sie sich gut aufgehoben fühlen.
                 </h1>
                 <p className="max-w-2xl text-lg leading-8 text-white/70 sm:text-[1.15rem]">
-                  Werksraum Automotive verbindet ruhige Werkstattprozesse, saubere Diagnose und ein
-                  hochwertiges Umfeld für Porsche, BMW M, Mercedes-AMG und exklusive
-                  Performance-Fahrzeuge.
+                  Werksraum Automotive verbindet durchdachte Werkstattprozesse mit einem hochwertigen
+                  Umfeld.
                 </p>
               </div>
 
@@ -131,7 +130,7 @@ export default function Home() {
 
               <div className="grid max-w-3xl gap-4 border-t border-white/10 pt-6 sm:grid-cols-3">
                 {[
-                  ["Diagnose", "klar kommuniziert"],
+                  ["Diagnose", "klar dokumentiert"],
                   ["Werkstatt", "kontrolliert organisiert"],
                   ["Betreuung", "persönlich statt anonym"],
                 ].map(([title, text]) => (
