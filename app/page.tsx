@@ -69,7 +69,7 @@ const galleryItems = [
   {
     label: "Werkstattatelier",
     caption: "Materialität, Ordnung und Lichtführung schaffen Vertrauen.",
-    image: withBasePath("/images/brand-premium-mercedes-bmw.png"),
+    image: withBasePath("/images/werkstattatelier.jpg"),
   },
   {
     label: "Detailarbeit",
