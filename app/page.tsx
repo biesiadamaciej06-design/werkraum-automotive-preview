@@ -88,12 +88,6 @@ const footerLinks = [
 ];
 
 export default function Home() {
-  const mobileInquiryHref = buildMailtoHref({
-    to: contactConfig.inquiryEmail,
-    subject: "Mobile Anfrage ueber die Website",
-    body: "Guten Tag,\n\nich moechte eine Anfrage an Werksraum Automotive stellen.",
-  });
-
   return (
     <main id="top" className="relative overflow-hidden pb-24 md:pb-0">
       <div className="pointer-events-none absolute inset-0 bg-radial-premium" />
@@ -437,7 +431,7 @@ export default function Home() {
       <div className="fixed inset-x-0 bottom-0 z-50 border-t border-white/10 bg-[rgba(5,6,8,0.9)] px-4 py-3 backdrop-blur-2xl md:hidden">
         <div className="mx-auto max-w-md">
           <a
-            href={mobileInquiryHref}
+            href="#kontakt"
             className="inline-flex min-h-12 w-full items-center justify-center rounded-full bg-champagne px-4 text-sm font-semibold text-obsidian shadow-[0_12px_32px_rgba(210,184,148,0.22)]"
           >
             Anfrage senden
