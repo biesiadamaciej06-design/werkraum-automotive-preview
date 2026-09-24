@@ -111,7 +111,7 @@ export default function Home() {
               <span className="eyebrow">Vertrauen durch Sorgfalt</span>
               <div className="space-y-6">
                 <p className="max-w-md text-sm uppercase tracking-[0.3em] text-white opacity-50">
-                  Österreich · Präzision statt Lautstärke
+                  Österreich · Sorgfalt, die Vertrauen schafft
                 </p>
                 <h1 className="display-title max-w-4xl">
                   Service, bei dem Sie sich gut aufgehoben fühlen.
