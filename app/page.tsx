@@ -79,8 +79,8 @@ const galleryItems = [
 ];
 
 const footerLinks = [
-  { label: "Leistungen", href: "#leistungen" },
-  { label: "Fahrzeuge", href: "#fahrzeuge" },
+  { label: "Unser Angebot", href: "#leistungen" },
+  { label: "Unsere Kunden", href: "#fahrzeuge" },
   { label: "Galerie", href: "#galerie" },
   { label: "Kontakt", href: "#kontakt" },
   { label: "Impressum", href: "/impressum" },
@@ -125,7 +125,7 @@ export default function Home() {
 
               <div className="flex flex-col gap-4 sm:flex-row">
                 <Link href="#leistungen" className="cta-secondary">
-                  Leistungen ansehen
+                  Unser Angebot ansehen
                 </Link>
               </div>
 
@@ -179,7 +179,7 @@ export default function Home() {
       >
         <FadeIn className="mx-auto max-w-3xl text-center">
           <div className="section-copy">
-            <span className="eyebrow">Leistungen</span>
+            <span className="eyebrow">Unser Angebot</span>
             <h2 className="section-title">Leistungen, die wie Werkstattleistung klingen und nicht wie Werbetext.</h2>
             <p className="text-base leading-8 text-white/64">
               Jede Leistung ist so gedacht, dass sie technisch sauber, wirtschaftlich nachvollziehbar
@@ -208,11 +208,11 @@ export default function Home() {
       >
         <div className="mx-auto max-w-3xl text-center">
           <FadeIn className="section-copy">
-            <span className="eyebrow">Fahrzeuge</span>
-            <h2 className="section-title">Für Marken, bei denen Nuancen wichtiger sind als Schlagworte.</h2>
+            <span className="eyebrow">Unsere Kunden</span>
+            <h2 className="section-title">Für Menschen, denen Qualität wichtiger ist als Schlagworte.</h2>
             <p className="text-base leading-8 text-white/64">
-              Werksraum Automotive richtet sich an Fahrzeuge, bei denen Fahrgefühl, Materialqualität
-              und technisches Vertrauen im Vordergrund stehen.
+              Werksraum Automotive richtet sich an Menschen, denen Fahrgefühl, Materialqualität und
+              technisches Vertrauen wichtig sind.
             </p>
           </FadeIn>
         </div>
